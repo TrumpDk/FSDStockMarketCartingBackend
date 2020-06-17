@@ -1,0 +1,5 @@
+FROM openjdk:8-jdk-alpine
+VOLUME /user-service
+ADD /target/smc-ms-user-1.0.0-SNAPSHOT.jar user-svc.jar
+EXPOSE 8001
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "user-svc.jar"]

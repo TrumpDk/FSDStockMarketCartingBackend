@@ -1,0 +1,78 @@
+#################################################
+###             Default Settings              ###
+#################################################
+
+# Application and Active Profile
+spring:
+  application:
+    name: user-service
+  profiles:
+    active: dev
+
+#################################################
+###             Profile Settings              ###
+#################################################
+
+---
+server:
+  port: 8001
+
+# jpa config
+spring:
+  profiles: dev
+  jpa:
+    generate-ddl: true
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        # dialect: org.hibernate.dialect.MySQL8Dialect
+        enable_lazy_load_no_trans: true
+  # Mail config
+  mail:
+    host: smtp.126.com
+    username: ibmfsd_cmh@126.com
+    password: 1234qwer
+    default-encoding: UTF-8
+
+  #开启h2控制台功能和访问地址
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # data source
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db_user;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+
+  # jason format
+  jackson:
+    date-format: dd-MM-yyyy HH:mm:ss
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+# Service Register and Discovery
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:123456@localhost:7000/eureka/
+
+# Logging
+logging:
+  level:
+    ROOT: INFO
+    com.ibm.fsd.smc.ms.user: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: /logs/user-service-dev.log
